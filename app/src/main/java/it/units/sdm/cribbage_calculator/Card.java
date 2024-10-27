@@ -2,53 +2,53 @@ package it.units.sdm.cribbage_calculator;
 
 public class Card {
 
-	private final Rank rank;
-	private final Suit suit;
+	private final char suit;
+	private final int rank;
 
-	public Card(Suit suit, Rank rank) {
+	public Card(int rank, char suit) {
 		this.rank = rank;
 		this.suit = suit;
 	}
 
-	public String getRank() {
-		return rank.getRank();
+	public int getRank() {
+		return rank;
 	}
 
-	public String getSuit() {
-		return suit.getSuit();
+	public char getSuit() {
+		return suit;
 	}
 
 	@Override
 	public String toString() {
-		return getRank() + getSuit();
+		return String.valueOf(getRank()) + " " + String.valueOf(getSuit());
 	}
 
 	public enum Rank {
 
-		ACE("1"), DEUCE("2"), THREE("3"), FOUR("4"), FIVE("5"), SIX("6"), SEVEN("7"), EIGHT("8"), NINE("9"), TEN("10"),
-		JACK("J"), QUEEN("Q"), KING("K");
+		ACE(1), DEUCE(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10), JACK(11), QUEEN(12),
+		KING(13);
 
-		private final String rank;
-
-		Rank(String rank) {
+		Rank(int rank) {
 			this.rank = rank;
 		}
 
-		public String getRank() {
+		private final int rank;
+
+		public int getRank() {
 			return rank;
 		}
 	}
 
 	public enum Suit {
-		CLUBS("♣︎"), SPADES("♠︎"), HEARTS("♥︎"), DIAMONDS("♦︎");
+		CLUBS('♣'), SPADES('♠'), HEARTS('♥'), DIAMONDS('♦');
 
-		Suit(final String suit) {
+		Suit(final char suit) {
 			this.suit = suit;
 		}
 
-		private String suit;
+		private char suit;
 
-		public String getSuit() {
+		public char getSuit() {
 			return suit;
 		}
 	}
