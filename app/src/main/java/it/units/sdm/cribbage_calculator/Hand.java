@@ -1,14 +1,15 @@
 package it.units.sdm.cribbage_calculator;
 
+import java.util.List;
+
 public class Hand {
 
-	private final Card[] handCards = null;
-	private final Card faceCard = null;
+	private final List<Card> handCards;
+	private final Card faceCard;
 
-	public Hand(String hand) {
-		// this.cards = parse(hand);
-		// this.faceCard = new Card((int) Integer.valueOf(hand.charAt(hand.length() -
-		// 2)), '0');
+	public Hand(List<Card> handCards, Card faceCard) {
+		this.handCards = handCards;
+		this.faceCard = faceCard;
 	}
 
 	public String score() {
@@ -60,7 +61,11 @@ public class Hand {
 	}
 
 	public Card faceCard() {
+		return faceCard;
+	}
+
+	public List<Card> handCards() {
 		// TODO Auto-generated method stub
-		return null;
+		return List.copyOf(handCards);
 	}
 }
