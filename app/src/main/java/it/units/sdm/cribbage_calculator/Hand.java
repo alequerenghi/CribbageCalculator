@@ -70,11 +70,11 @@ public class Hand {
 
 	public int flush() {
 		for (int i = 1; i < cards.length - 1; i++) {
-			if (cards[i].getSuit() != cards[i - 1].getSuit())
+			if (cards[i].suite() != cards[i - 1].suite())
 				return 0;
 		}
-		if (cards[cards.length - 1].getSuit() == cards[cards.length - 2].getSuit())
-			return cards[cards.length].getSuit() == 'J' ? 6 : 5;
+		if (cards[cards.length - 1].suite() == cards[cards.length - 2].suite())
+			return cards[cards.length].suite() == 'J' ? 6 : 5;
 		return 4;
 	}
 

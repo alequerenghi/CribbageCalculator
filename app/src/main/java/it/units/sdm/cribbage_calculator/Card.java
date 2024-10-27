@@ -2,10 +2,10 @@ package it.units.sdm.cribbage_calculator;
 
 public class Card {
 
-	private final char suit;
+	private final Character suit;
 	private final int rank;
 
-	public Card(int rank, char suit) {
+	public Card(int rank, Character suit) {
 		this.rank = rank;
 		this.suit = suit;
 	}
@@ -14,13 +14,13 @@ public class Card {
 		return rank;
 	}
 
-	public char getSuit() {
+	public Character suite() {
 		return suit;
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(getRank()) + " " + String.valueOf(getSuit());
+		return String.valueOf(getRank()) + " " + String.valueOf(suite());
 	}
 
 	public enum Rank {
