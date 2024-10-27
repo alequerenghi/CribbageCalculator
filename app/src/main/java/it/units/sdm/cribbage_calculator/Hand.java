@@ -1,5 +1,6 @@
 package it.units.sdm.cribbage_calculator;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Hand {
@@ -34,12 +35,29 @@ public class Hand {
 	 * currentSum, totalPoints); else if (currentSum + faceVals[i] == 15)
 	 * totalPoints += 2; } return totalPoints; }
 	 */
+
+	public int runs() {
+		int streak = 1;
+		int[] faceVals = new int[handCards.size() + 1];
+		for (int i = 0; i < faceVals.length - 1; i++) {
+			faceVals[i] = handCards.get(i).rank();
+		}
+		faceVals[handCards.size()] = faceCard.rank();
+		Arrays.sort(faceVals);
+		for (int i = 1; i < 5; i++) {
+			if (faceVals[i] == faceVals[i - 1] + 1) {
+				streak++;
+			} else if (faceVals[i] == faceVals[i - 1]) {
+				continue;
+			} else if (streak < 3)
+				streak = 1;
+			else {
+				break;
+			}
+		}
+		return streak < 3 ? 0 : streak;
+	}
 	/*
-	 * public int runs() { int streak = 1; int[] faceVals = ranks();
-	 * Arrays.sort(faceVals); for (int i = 1; i < 5; i++) { if (faceVals[i] ==
-	 * faceVals[i - 1] + 1) { streak++; } else if (streak < 3) streak = 1; } return
-	 * streak < 3 ? 0 : streak; }
-	 * 
 	 * public int pairs() { int streak = 1; int total = 0; int[] faceVals = ranks();
 	 * Arrays.sort(faceVals); for (int i = 1; i < 5; i++) { if (faceVals[i] ==
 	 * faceVals[i - 1]) streak++; else { total += switch (streak) { case 2 -> 2;
@@ -55,17 +73,12 @@ public class Hand {
 	 * public int[] ranks() { int[] ranks = new int[cards.length]; for (int i = 0; i
 	 * < ranks.length; i++) { ranks[i] = cards[i].getRank(); } return ranks; }
 	 */
-	public static void main(String[] args) {
-
-		System.out.print("ciao".substring(1, 2));
-	}
 
 	public Card faceCard() {
 		return faceCard;
 	}
 
 	public List<Card> handCards() {
-		// TODO Auto-generated method stub
 		return List.copyOf(handCards);
 	}
 }
