@@ -1,8 +1,9 @@
 package it.units.sdm.cribbage_calculator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Hand {
 
@@ -15,7 +16,6 @@ public class Hand {
 	}
 
 	public String score() {
-		int total = 0;
 
 		// total = fifteenTwos(0, 0, 0);
 
@@ -24,7 +24,7 @@ public class Hand {
 		// total += pairs();
 
 		// total += flush();
-		return String.valueOf(total);
+		return String.valueOf("");
 	}
 
 	public int fifteenTwos() {
@@ -48,32 +48,45 @@ public class Hand {
 	}
 
 	public int runs() {
+		List<Integer> ranks = handCards.stream().map(i -> i.rank()).collect(Collectors.toList());
+		ranks.add(faceCard.rank());
+		Collections.sort(ranks);
+
 		int streak = 1;
-		int[] faceVals = new int[handCards.size() + 1];
-		for (int i = 0; i < faceVals.length - 1; i++) {
-			faceVals[i] = handCards.get(i).rank();
-		}
-		faceVals[handCards.size()] = faceCard.rank();
-		Arrays.sort(faceVals);
-		for (int i = 1; i < 5; i++) {
-			if (faceVals[i] == faceVals[i - 1] + 1) {
+		int previous = ranks.get(0);
+
+		for (int current : ranks) {
+			if (current == previous + 1) {
 				streak++;
-			} else if (faceVals[i] == faceVals[i - 1]) {
+			} else if (current == previous) {
 				continue;
-			} else if (streak < 3)
+			} else if (streak < 3) {
 				streak = 1;
-			else {
-				break;
+
 			}
+			previous = current;
 		}
 		return streak < 3 ? 0 : streak;
 	}
-	/*
-	 * public int pairs() { int streak = 1; int total = 0; int[] faceVals = ranks();
-	 * Arrays.sort(faceVals); for (int i = 1; i < 5; i++) { if (faceVals[i] ==
-	 * faceVals[i - 1]) streak++; else { total += switch (streak) { case 2 -> 2;
-	 * case 3 -> 6; case 4 -> 12; default -> 0; }; streak = 1; } } return total; }
-	 */
+
+	public int pairs() {
+		int streak = 0;
+		int total = 0;
+		List<Integer> ranks = handCards.stream().map(i -> i.rank()).collect(Collectors.toList());
+		ranks.add(faceCard.rank());
+		Collections.sort(ranks);
+		int previous = ranks.get(0);
+		for (int current : ranks) {
+			if (current == previous)
+				streak++;
+			else {
+				previous = current;
+				total += streak > 1 ? Hand.factorial(streak) : 0;
+				streak = 1;
+			}
+		}
+		return total + (streak > 1 ? Hand.factorial(streak) : 0);
+	}
 
 	public int flush() {
 		char previous = handCards.get(0).suite();
@@ -85,6 +98,14 @@ public class Hand {
 			}
 		}
 		return previous == faceCard.suite() ? (faceCard.rank() == 11 ? 6 : 5) : 4;
+	}
+
+	private static int factorial(int value) {
+		int out = 1;
+		for (int i = value; i > 0; i--) {
+			out *= i;
+		}
+		return out;
 	}
 
 	public Card faceCard() {

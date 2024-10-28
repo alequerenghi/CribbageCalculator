@@ -51,4 +51,16 @@ class HandScore {
 		assertEquals(14, hand.fifteenTwos());
 	}
 
+	@Test
+	void pairsScoreIsZero() {
+		Hand hand = parser.parse("0♦J♥Q♣A♣9♦");
+		assertEquals(0, hand.pairs());
+	}
+
+	@Test
+	void pairsScoreIsEight() {
+		Hand hand = parser.parse("5♥5♥5♥J♥J♣");
+		assertEquals(8, hand.pairs());
+	}
+
 }
