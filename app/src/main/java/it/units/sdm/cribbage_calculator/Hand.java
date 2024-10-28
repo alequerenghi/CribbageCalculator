@@ -27,15 +27,25 @@ public class Hand {
 		return String.valueOf(total);
 	}
 
-	/*
-	 * public int fifteenTwos(int index, int currentSum, int totalPoints) { int[]
-	 * faceVals = new int[5]; for (int i = 0; i < 5; i++) { faceVals[i] = switch
-	 * (hand.charAt(i * 2)) { case 'Q', 'J', 'K', '0' -> 10; case 'A' -> 1; default
-	 * -> Integer.valueOf(hand.charAt(i)); }; } for (int i = index; i < 5; i++) { if
-	 * (currentSum + faceVals[i] < 15) return fifteenTwos(index + 1, faceVals[i] +
-	 * currentSum, totalPoints); else if (currentSum + faceVals[i] == 15)
-	 * totalPoints += 2; } return totalPoints; }
-	 */
+	public int fifteenTwos() {
+		return fifteenTwosRec(0, 0);
+	}
+
+	private int fifteenTwosRec(int beginIndex, int currentSum) {
+		int score = 0;
+		for (int current = beginIndex; current < handCards.size() + 1; current++) {
+			int valueToAdd = current < handCards.size() ? handCards.get(current).rank() : faceCard.rank();
+			if (valueToAdd > 10) {
+				valueToAdd = 10;
+			}
+			if (currentSum + valueToAdd < 15) {
+				score += fifteenTwosRec(current + 1, currentSum + valueToAdd);
+			} else if (currentSum + valueToAdd == 15) {
+				score += 2;
+			}
+		}
+		return score;
+	}
 
 	public int runs() {
 		int streak = 1;
