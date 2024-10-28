@@ -18,6 +18,25 @@ class HandScore {
 	@Test
 	void runsScoreIsZero() {
 		Hand hand = parser.parse("5♥5♦5♠J♣5♣");
+		assertEquals(0, hand.runs());
+	}
+
+	@Test
+	void flushScoreIsZero() {
+		Hand hand = parser.parse("5♥5♦5♠J♣5♣");
+		assertEquals(0, hand.flush());
+	}
+
+	@Test
+	void flushScoreIsFour() {
+		Hand hand = parser.parse("5♥5♥5♥J♥J♣");
+		assertEquals(4, hand.flush());
+	}
+
+	@Test
+	void flushScoreIsSix() {
+		Hand hand = parser.parse("5♥5♥5♥J♥J♥");
+		assertEquals(6, hand.flush());
 	}
 
 }

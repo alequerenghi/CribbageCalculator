@@ -65,15 +65,17 @@ public class Hand {
 	 * case 3 -> 6; case 4 -> 12; default -> 0; }; streak = 1; } } return total; }
 	 */
 
-	/*
-	 * public int flush() { for (int i = 1; i < cards.length - 1; i++) { if
-	 * (cards[i].suite() != cards[i - 1].suite()) return 0; } if (cards[cards.length
-	 * - 1].suite() == cards[cards.length - 2].suite()) return
-	 * cards[cards.length].suite() == 'J' ? 6 : 5; return 4; }
-	 * 
-	 * public int[] ranks() { int[] ranks = new int[cards.length]; for (int i = 0; i
-	 * < ranks.length; i++) { ranks[i] = cards[i].getRank(); } return ranks; }
-	 */
+	public int flush() {
+		char previous = handCards.get(0).suite();
+		for (Card current : handCards) {
+			if (previous != current.suite()) {
+				return 0;
+			} else {
+				previous = current.suite();
+			}
+		}
+		return previous == faceCard.suite() ? (faceCard.rank() == 11 ? 6 : 5) : 4;
+	}
 
 	public Card faceCard() {
 		return faceCard;
