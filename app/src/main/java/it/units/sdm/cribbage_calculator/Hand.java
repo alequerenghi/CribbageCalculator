@@ -1,5 +1,6 @@
 package it.units.sdm.cribbage_calculator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -79,6 +80,7 @@ public class Hand {
 	}
 
 	public List<Card> handCards() {
-		return List.copyOf(handCards);
+		return new ArrayList<Card>(handCards);
 	}
+
 }
